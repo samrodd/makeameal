@@ -8,6 +8,7 @@ const connection = mysql.createConnection({
     host: 'make-a-meal.caysbalbgorm.us-east-2.rds.amazonaws.com',
     user: 'admin',
     password: 'hoopla1993',
+    database: 'sys',
     port: '3306'
 });
 connection.connect((err) => {
@@ -15,10 +16,10 @@ connection.connect((err) => {
     console.log('Database connected!');
 })
 
-connection.query('SELECT 1 AS one', function (err, rows, fields) {
+connection.query('SELECT * FROM full_dataset', function (err, rows, fields) {
     if (err) throw err
     
-    console.log('The one is: ', rows[0].one)
+    console.log('Row 1 is ', rows[0])
   })
 
 app.get('/', (req, res) => {
