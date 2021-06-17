@@ -1,15 +1,17 @@
 const express = require('express');
 const mysql = require('mysql'); //mysql driver
 const app = express();
+const dotenv = require("dotenv");
+dotenv.config();
 
 const port = 3000;
 
 const connection = mysql.createConnection({
-    host: 'make-a-meal.caysbalbgorm.us-east-2.rds.amazonaws.com',
-    user: 'admin',
-    password: 'hoopla1993',
-    database: 'sys',
-    port: '3306'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    port: process.env.DB_PORT
 });
 connection.connect((err) => {
     if(err) throw err;
