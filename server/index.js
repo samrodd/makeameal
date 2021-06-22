@@ -22,11 +22,11 @@ connection.connect((err) => {
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
-/*connection.query('SELECT * FROM full_dataset', function (err, rows, fields) {
+connection.query('SELECT * FROM full_dataset LIMIT 10', function (err, rows, fields) {
     if (err) throw err
     
-    console.log('Row 1 is ', rows[2])
-  })*/
+    console.log('Rows ', rows)
+  })
 
   /*connection.query('SELECT * FROM ingredient_occurrences', function(err, rows, fields){
     if(err) throw err
