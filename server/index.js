@@ -47,7 +47,7 @@ app.post('/api/post', (req, res) => {
     //console.log(req.body.ingredientName);
     //console.log(req.body);
     
-    connection.query("SELECT recipe_id, ingredient_name FROM ingredient_occurrences WHERE ingredient_name = (?) LIMIT 5", ingredientName, function(err, rows, fields){
+    connection.query("SELECT recipe_id, ingredient_name FROM ingredient_occurrences WHERE ingredient_name = (?) LIMIT 10", ingredientName, function(err, rows, fields){
         if(err) throw err
         res.json(rows);
         //console.log(rows);
