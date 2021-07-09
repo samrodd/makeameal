@@ -39,21 +39,39 @@ app.use(express.json());
     //console.log(objectA);
 })*/
 
+
 var matched_id = [];
 app.post('/api/post', (req, res) => {
     //var matched_id = [];
     const ingredientName = req.body.ingredientName;
-    
+    console.log(ingredientName)
+    let strArr = ingredientName.split(' ');
+    console.log(strArr);
     //console.log(req.body.ingredientName);
     //console.log(req.body);
+    let newStr = "";
+    for(let i = 0; i < strArr.length; i++){
+        if(i != strArr.length - 1){
+            let temp = "'%" + strArr[i]+ "%'" + " AND ingredients_string LIKE ";
+            newStr += temp;
+        }
+        else{
+            let temp = "'%" + strArr[i]+ "%'";
+            newStr += temp;
+        }
+    }
+    console.log(newStr);
+    //let resultQuery = `SELECT id, ingredients_string FROM full_dataset WHERE ingredients_string LIKE '${newStr}' LIMIT 10`;
+    let resultQuery = `SELECT id, ingredients_string FROM full_dataset WHERE ingredients_string LIKE ${newStr} LIMIT 10`;
     
-    connection.query("SELECT recipe_id, ingredient_name FROM ingredient_occurrences WHERE ingredient_name = (?) LIMIT 10", ingredientName, function(err, rows, fields){
+    connection.query(resultQuery, function(err, rows, fields){
+        console.log(resultQuery);
         if(err) throw err
-        res.json(rows);
+        //res.json(rows);
         //console.log(rows);
         
         for(let i = 0; i < rows.length; i++){
-            matched_id.push(rows[i].recipe_id);
+            matched_id.push(rows[i].id);
             //console.log(id);
         }
         console.log(matched_id);
@@ -65,7 +83,7 @@ app.post('/api/post', (req, res) => {
 
 app.get('/api/get', (req, res, next) => {
     
-    let get_recipes_query = "SELECT id, title, ingredients, directions FROM full_dataset LIMIT 1000";
+    let get_recipes_query = "SELECT id, title, ingredients, directions FROM full_dataset LIMIT 3000";
     let all_recipes = [];
     let matched_recipes = [];
     connection.query(get_recipes_query, function(err, rows){
