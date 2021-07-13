@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  background-color: #97ce8c;
+  background-image: url("https://i.pinimg.com/originals/1d/93/e9/1d93e9df8121ff0c4c6dcb8650b101ec.jpg");
+  padding: 300px;
+  font-family: Cambria;
 }
 
 .App-logo {
