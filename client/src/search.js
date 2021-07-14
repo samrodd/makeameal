@@ -60,6 +60,7 @@ const Search = () => {
                                 <li >Title: {val.title}</li>
                                 <li >Ingredient: {val.ingredients}</li>
                                 <li >Directions: {val.directions}</li>
+                                <li >Ingredient string: {val.ingredients_string}</li>
                             </ul>
                         </div>
                     )

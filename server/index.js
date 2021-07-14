@@ -25,11 +25,11 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 
-/*connection.query('SELECT * FROM full_dataset LIMIT 10', function (err, rows, fields) {
+connection.query('SELECT * FROM full_dataset WHERE ingredient_count < 4 LIMIT 10', function (err, rows, fields) {
     if (err) throw err
     
     console.log('Rows ', rows)
-  })*/
+  })
 
   /*connection.query('SELECT * FROM ingredient_occurrences', function(err, rows, fields){
     if(err) throw err
@@ -39,16 +39,17 @@ app.use(express.json());
     //console.log(objectA);
 })*/
 
-
 var matched_id = [];
 app.post('/api/post', (req, res) => {
     //var matched_id = [];
     const ingredientName = req.body.ingredientName;
     console.log(ingredientName)
-    let strArr = ingredientName.split(' ');
+    let strArr = ingredientName.split(', ');
     console.log(strArr);
+    
     //console.log(req.body.ingredientName);
     //console.log(req.body);
+    /*
     let newStr = "";
     for(let i = 0; i < strArr.length; i++){
         if(i != strArr.length - 1){
@@ -77,13 +78,27 @@ app.post('/api/post', (req, res) => {
         console.log(matched_id);
         //matched_id = [];
     })
-    //console.log(ingredientName);
-    //res.json({ response: 'response 1' });
+    */
+    
+    let new_procedure = `CALL sys.new_procedure('${strArr[0]}', '${strArr[1]}', '${strArr[2]}')`;
+    console.log(new_procedure);
+    
+    connection.query(new_procedure, true, function(err, rows, fields){
+        if(err) throw err;
+
+        let result = Object.values(JSON.parse(JSON.stringify(rows)))
+        console.log(result[0][0]);
+        if(typeof result[0][0] !== 'undefined')
+        {
+            matched_id.push(result[0][0].id);
+        }
+        
+    })
 })
 
 app.get('/api/get', (req, res, next) => {
     
-    let get_recipes_query = "SELECT id, title, ingredients, directions FROM full_dataset LIMIT 3000";
+    let get_recipes_query = "SELECT id, title, ingredients, directions, ingredients_string FROM full_dataset LIMIT 10000";
     let all_recipes = [];
     let matched_recipes = [];
     connection.query(get_recipes_query, function(err, rows){
@@ -99,12 +114,12 @@ app.get('/api/get', (req, res, next) => {
             }
             //if(resultRows[i].id == 0){ console.log(matched_id)}
         }
-        res.json(matched_recipes);
+        res.send(matched_recipes);
         resultRows = [];
         matched_id = [];
         next();
     })
-   
+    
     /*const updatePromises = []
     for(let i = 0; i < matched_id.length; i++){
         connection.query(get_recipes_query, matched_id[i], function(err, rows){
