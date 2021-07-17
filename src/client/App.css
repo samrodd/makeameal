@@ -1,14 +1,47 @@
 .App {
   text-align: center;
-  background-color: #97ce8c;
-  background-image: url("https://i.pinimg.com/originals/1d/93/e9/1d93e9df8121ff0c4c6dcb8650b101ec.jpg");
-  padding: 300px;
-  font-family: Cambria;
+  background-color: #8c96ce;
+  padding: 40px;
+  font-family: Arial;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+body, html  {
+  height: 100%;
+  font-family: Cambria;
+  background-color: #8c96ce;
+}
+
+h1  {
+  font-size: 48px;
+  font-family: Calibri;
+  background: -webkit-linear-gradient(#8c96ce, #555d87);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 2px #fff;
+}
+
+.hero-image {
+  background-image: linear-gradient(rgba(140, 150, 206), rgba(189, 137, 204, 0.2)), url("https://post.healthline.com/wp-content/uploads/2020/08/blueberries-1200x628-facebook-1200x628.jpg");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  border: 3px solid #555d87
+}
+
+.hero.text  {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
 }
 
 @media (prefers-reduced-motion: no-preference) {
