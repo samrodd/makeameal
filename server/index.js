@@ -57,7 +57,10 @@ app.post('/api/post', (req, res) => {
         if(err) throw err;
         
         console.log(rows[0])
+        
         res.send(rows[0])
+        //if(rows[0].length != 0){ res.send(rows[0]) }
+        //else { res.send("no result found")}
         
         /*for(let value of Object.values(rows[0]))
         {
