@@ -25,7 +25,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 
-connection.query('SELECT * FROM full_dataset WHERE ingredient_count < 14 LIMIT 500', function (err, rows, fields) {
+connection.query('SELECT * FROM full_dataset WHERE ingredient_count < 14 LIMIT 100', function (err, rows, fields) {
     if (err) throw err
     
     console.log('Rows ', rows)
@@ -39,7 +39,7 @@ connection.query('SELECT * FROM full_dataset WHERE ingredient_count < 14 LIMIT 5
     //console.log(objectA);
 })*/
 
-var matched_id = [];
+//var matched_id = [];
 app.post('/api/post', (req, res) => {
     console.log('post')
     //var matched_id = [];
@@ -48,57 +48,41 @@ app.post('/api/post', (req, res) => {
     let strArr = ingredientName.split(', ');
     console.log(strArr);
     
-    //console.log(req.body.ingredientName);
-    //console.log(req.body);
-    /*
-    let newStr = "";
-    for(let i = 0; i < strArr.length; i++){
-        if(i != strArr.length - 1){
-            let temp = "'%" + strArr[i]+ "%'" + " AND ingredients_string LIKE ";
-            newStr += temp;
-        }
-        else{
-            let temp = "'%" + strArr[i]+ "%'";
-            newStr += temp;
-        }
-    }
-    console.log(newStr);
-    //let resultQuery = `SELECT id, ingredients_string FROM full_dataset WHERE ingredients_string LIKE '${newStr}' LIMIT 10`;
-    let resultQuery = `SELECT id, ingredients_string FROM full_dataset WHERE ingredients_string LIKE ${newStr} LIMIT 10`;
     
-    connection.query(resultQuery, function(err, rows, fields){
-        console.log(resultQuery);
-        if(err) throw err
-        //res.json(rows);
-        //console.log(rows);
-        
-        for(let i = 0; i < rows.length; i++){
-            matched_id.push(rows[i].id);
-            //console.log(id);
-        }
-        console.log(matched_id);
-        //matched_id = [];
-    })
-    */
     
     let new_procedure = `CALL sys.new_procedure('${strArr[0]}', '${strArr[1]}', '${strArr[2]}', '${strArr[3]}', '${strArr[4]}', '${strArr[5]}', '${strArr[6]}', '${strArr[7]}', '${strArr[8]}', '${strArr[9]}', '${strArr[10]}', '${strArr[11]}', '${strArr[12]}')`;
     console.log(new_procedure);
     
     connection.query(new_procedure, true, function(err, rows, fields){
         if(err) throw err;
-
-        let result = Object.values(JSON.parse(JSON.stringify(rows)))
-        console.log(result[0][0]);
+        
+        console.log(rows[0])
+        res.send(rows[0])
+        
+        /*for(let value of Object.values(rows[0]))
+        {
+            //console.log(value.id);
+            matched_id.push(value.id);
+        }
+        console.log("post matched id is " + matched_id)
+        //console.log(Object.entries(rows[0][0].id));
+        //console.log(Object.values(JSON.parse(JSON.stringify(rows[0][0]))));
+        /*let result = Object.values(JSON.parse(JSON.stringify(rows)))
+        //console.log(result[0][0]);
         if(typeof result[0][0] !== 'undefined')
         {
+            
+            console.log("matched id is ...." + Object.values(JSON.parse(JSON.stringify(result[0][0]))));
             matched_id.push(result[0][0].id);
         }
+        */
         
     })
 })
-
+/*
 app.get('/api/get', (req, res, next) => {
-    console.log('get')
+    
+    console.log('get matched_id is ' + matched_id)
     let get_recipes_query = "SELECT id, title, ingredients, directions, ingredients_string FROM full_dataset LIMIT 1000";
     //let get_recipes_query = "SELECT id, title, ingredients, directions, ingredients_string FROM full_dataset WHERE id = ?"
     let all_recipes = [];
@@ -123,21 +107,8 @@ app.get('/api/get', (req, res, next) => {
         next();
     })
     
-    /*const updatePromises = []
-    for(let i = 0; i < matched_id.length; i++){
-        connection.query(get_recipes_query, matched_id[i], function(err, rows){
-            if(err) throw err;
-            //console.log(rows);
-            updatePromises.push(rows);
-            
-        });
-    }*/
-    //async.forEachOF()
-    //await Promise.all(updatePromises);
-    /*getRecipes(matched_id).then(function(result){
-        console.log(result);
-    })*/
-})
+   
+})*/
 
 app.listen(port, () => {
     console.log(`server is running at http://localhost:${port}`);
