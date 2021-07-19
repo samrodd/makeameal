@@ -25,7 +25,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 
-connection.query('SELECT * FROM full_dataset WHERE ingredient_count < 14 LIMIT 100', function (err, rows, fields) {
+connection.query('SELECT * FROM full_dataset WHERE ingredient_count < 9 LIMIT 100', function (err, rows, fields) {
     if (err) throw err
     
     console.log('Rows ', rows)
@@ -50,7 +50,7 @@ app.post('/api/post', (req, res) => {
     
     
     
-    let new_procedure = `CALL sys.new_procedure('${strArr[0]}', '${strArr[1]}', '${strArr[2]}', '${strArr[3]}', '${strArr[4]}', '${strArr[5]}', '${strArr[6]}', '${strArr[7]}', '${strArr[8]}', '${strArr[9]}', '${strArr[10]}', '${strArr[11]}', '${strArr[12]}')`;
+    let new_procedure = `CALL sys.new_procedure('${strArr[0]}', '${strArr[1]}', '${strArr[2]}', '${strArr[3]}', '${strArr[4]}', '${strArr[5]}', '${strArr[6]}', '${strArr[7]}')`;
     console.log(new_procedure);
     
     connection.query(new_procedure, true, function(err, rows, fields){
