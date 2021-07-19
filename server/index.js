@@ -41,6 +41,7 @@ connection.query('SELECT * FROM full_dataset WHERE ingredient_count < 4 LIMIT 10
 
 var matched_id = [];
 app.post('/api/post', (req, res) => {
+    console.log('post')
     //var matched_id = [];
     const ingredientName = req.body.ingredientName;
     console.log(ingredientName)
@@ -97,8 +98,9 @@ app.post('/api/post', (req, res) => {
 })
 
 app.get('/api/get', (req, res, next) => {
-    
-    let get_recipes_query = "SELECT id, title, ingredients, directions, ingredients_string FROM full_dataset LIMIT 10000";
+    console.log('get')
+    let get_recipes_query = "SELECT id, title, ingredients, directions, ingredients_string FROM full_dataset LIMIT 1000";
+    //let get_recipes_query = "SELECT id, title, ingredients, directions, ingredients_string FROM full_dataset WHERE id = ?"
     let all_recipes = [];
     let matched_recipes = [];
     connection.query(get_recipes_query, function(err, rows){
@@ -110,9 +112,10 @@ app.get('/api/get', (req, res, next) => {
             for(let j = 0; j < matched_id.length; j++){
                 if(resultRows[i].id == matched_id[j]){
                     matched_recipes.push(resultRows[i]);
+                    break;
                 }
             }
-            //if(resultRows[i].id == 0){ console.log(matched_id)}
+            //if(resultRows[i].id == matched_id){ matched_recipes.push(resultRows[i]);}
         }
         res.send(matched_recipes);
         resultRows = [];

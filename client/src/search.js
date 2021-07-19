@@ -55,7 +55,7 @@ const Search = () => {
                 <button type="submit">Search</button>
                 {matchedRecipes.map((val)=>{
                     return(
-                        <div>
+                        <div key = {val.id}>
                             <ul>
                                 <li >Title: {val.title}</li>
                                 <li >Ingredient: {val.ingredients}</li>
