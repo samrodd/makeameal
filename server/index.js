@@ -25,7 +25,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 
- connection.query('SELECT ingredients_string FROM full_dataset WHERE ingredient_count = 3 ', function (err, rows, fields) {
+ connection.query('SELECT * FROM full_dataset WHERE ingredient_count = 3 ', function (err, rows, fields) {
      if (err) throw err
     
      console.log('Rows ', rows)
