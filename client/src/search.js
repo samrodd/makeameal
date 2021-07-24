@@ -7,10 +7,7 @@ const Search = () => {
     const [ingredientName, setIngredientName] = useState("");
     const [matchedRecipes, setMatchedRecipes] = useState([]);
 
-    const refresh = () => {
-        console.log("am i refreshing")
-        return window.location.reload();
-    }
+   
     const submitIngredient = async (e) => {
         e.preventDefault();
         await axios.post('http://localhost:3001/api/post', {
@@ -19,43 +16,43 @@ const Search = () => {
             (response) => setMatchedRecipes(response.data)
             )
     }
-    /*
-    useEffect(()=> {
-
-        axios.get('http://localhost:3001/api/get').then((response)=>{
-            console.log(response.data)
-            setMatchedRecipes(response.data)
-        })
-    }, [])*/
+  
     
-        return( 
+        return(
+            <div>
             <form className = "search_form" onSubmit={submitIngredient}>
-                <label>Search Bar</label>
+                
                 <input
                     type="text"
                     placeholder="type your ingredient"
                     name="ingredientName"
                     onChange={ (e)=> {
-                        console.log(e.target.value)
+                        //console.log(e.target.value)
+                        
                         setIngredientName(e.target.value)
                     }}
                     
                 />
-                <button type="submit">Search</button>
+                <button type="submit"><i className="fa fa-search"></i></button>
+                </form>
+
+                <div className = "result-list-container">
                 {matchedRecipes.map((val)=>{
                     return(
                         <div key={val.id}>
                             <ul >
-                                <li >Title: {val.title}</li>
-                                <li >Ingredient: {val.ingredients}</li>
-                                <li >Directions: {val.directions}</li>
-                                <li >Ingredient string: {val.ingredients_string}</li>
+                                <li ><h2>{val.title}</h2></li>
+                                <li ><h4>Ingredient:</h4> <span>{val.ingredients}</span></li>
+                                <li ><h4>Directions:</h4> {val.directions}</li>
+                                <li ><h4>Your ingredients: </h4> {val.ingredients_string}</li>
                             </ul>
                         </div>
                     )
                     
                 })}
-            </form>   
+                </div>
+           </div>
+           
         );
 
     

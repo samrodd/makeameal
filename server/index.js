@@ -25,28 +25,29 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 
-connection.query('SELECT * FROM full_dataset WHERE ingredient_count < 9 LIMIT 100', function (err, rows, fields) {
-    if (err) throw err
+ connection.query('SELECT ingredients_string FROM full_dataset WHERE ingredient_count = 3 ', function (err, rows, fields) {
+     if (err) throw err
     
-    console.log('Rows ', rows)
-  })
+     console.log('Rows ', rows)
+   })
 
-  /*connection.query('SELECT * FROM ingredient_occurrences', function(err, rows, fields){
-    if(err) throw err
-    let objectA = {};
-    objectA = rows[0];
-    console.log(rows);
-    //console.log(objectA);
-})*/
+//   connection.query('SELECT * FROM ingredients', function(err, rows, fields){
+//     if(err) throw err
+    
+//     console.log(rows);
+   
+// })
 
 //var matched_id = [];
 app.post('/api/post', (req, res) => {
     console.log('post')
-    //var matched_id = [];
+    var matched_id = [];
     const ingredientName = req.body.ingredientName;
     console.log(ingredientName)
     let strArr = ingredientName.split(', ');
     console.log(strArr);
+
+    //const strArr = req.body.ingredientName;
     
     
     
