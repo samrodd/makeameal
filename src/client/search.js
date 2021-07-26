@@ -1,7 +1,7 @@
 import "./App.css";
 import axios from "axios";
 import {useState, useEffect} from "react";
-
+import './search.css'
 
 const Search = () => {
     const [ingredientName, setIngredientName] = useState("");
@@ -42,7 +42,7 @@ const Search = () => {
 
         return( 
             <form className = "search_form" onSubmit={submitIngredient}>
-                <label>Search Bar</label>
+                <label>Search Bar </label>
                 <input
                     type="text"
                     placeholder="type your ingredient"
@@ -56,10 +56,27 @@ const Search = () => {
                 {matchedRecipes.map((val)=>{
                     return(
                         <div>
+                            <div className="card">
+                                <div className="header">
+                                    <div className="icon">
+                                        <a href="#"><i className="fa fa-heart-o"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="text">
+                                    <h2 className="food">
+                                        {val.title}
+                                    </h2>
+                                    <i class="fa fa-clock-o">15 Mins</i>
+                                    <i class="fa fa-users">Serves 2</i>
+
+                                    <p className="info"><em>You will need: </em>{val.ingredients}</p>
+                                    <p className="info"><em>Directions: </em>{val.directions}</p>
+                                </div>
+                            </div>
                             <ul>
-                                <li >Title: {val.title}</li>
-                                <li >Ingredient: {val.ingredients}</li>
-                                <li >Directions: {val.directions}</li>
+                                
+                              
                             </ul>
                         </div>
                     )
@@ -91,4 +108,3 @@ const Search = () => {
 }
 
 export default Search;
-{"mode":"full","isActive":false}
