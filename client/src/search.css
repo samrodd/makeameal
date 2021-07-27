@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+* {
+   margin: 0;
+   padding: 0;
+   font-family: font;
+   list-style-type: none;
+   text-decoration: none;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   -o-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+img {
+   max-width: 100%;
+}
+
+html, body {
+   height: 100%;
+}
+
+body {
+   background: url("https://wallpaperscraft.com/image/coffee_coffee_beans_cupcake_candy_93301_1920x1080.jpg") no-repeat center;
+}
+
+.card {
+   position: relative;
+   background: white;
+   width: 90%;
+   /* max-width: 500px; */
+   margin: 20px auto;
+   box-shadow: 0px 0px 30px 2px #000;
+}
+.header {
+      background: url("http://img.taste.com.au/UZVXAdo7/taste/2016/11/chinese-egg-noodle-and-vegetable-stir-fry-94186-1.jpeg") no-repeat center;
+      background-size: cover;
+      min-height: 350px;
+}
+.icon a .fa-heart-o {
+         position: absolute;
+         left: 85%;
+         bottom: 30.7%;
+         background: heart;
+         color: white;
+         font-size: 1.3em;
+         font-weight: bold;
+         padding: 15px;
+         border-radius: 50%;
+         box-shadow: 0px 5px 30px 1px heart;
+}
+.text .food {
+    color: black;
+    text-align: center;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 15px 40px;
+    
+}
+.fa-clock-o {
+    color: gray;
+    margin: 0 30px;
+}
+.fa-users {
+    color: gray;
+}
+.stars {
+    margin: 10px 30px;
+}
+li a i {
+     color: star;
+}
+.info-1{
+      margin: 10px 30px;   
+}
+
+.info-2{
+    margin: 10px 30px;
+    padding-bottom: 20px;
+}
+ a.btn {
+      display: block;
+      background: button;
+      color: white;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-align: center;
+      padding: 10px;
+      transition: 250ms;
+      
+   }

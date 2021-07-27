@@ -1,7 +1,7 @@
 import "./App.css";
 import axios from "axios";
 import {useState} from "react";
-
+import './search.css'
 
 const Search = () => {
     const [ingredientName, setIngredientName] = useState("");
@@ -36,8 +36,10 @@ const Search = () => {
                 <button type="submit"><i className="fa fa-search"></i></button>
                 </form>
 
+                {/*
                 <div className = "result-list-container">
                 {matchedRecipes.map((val)=>{
+                   
                     return(
                         <div key={val.id}>
                             <ul >
@@ -47,18 +49,37 @@ const Search = () => {
                                 <li ><h4>Your ingredients: </h4> {val.ingredients_string}</li>
                             </ul>
                         </div>
-                    )
-                    
+                    )     
                 })}
                 </div>
-           </div>
+                 */}
+               
+                {matchedRecipes.map((val)=>{
+                    return(
+                        <div>
+                            <div className="card">
+                                <div className="header">
+                                        <div className="icon">
+                                            <a href="#"><i className="fa fa-heart-o"></i></a>
+                                        </div>
+                                </div>
+                                        <div className="text">
+                                            <h2 className="food">{val.title}</h2>
+                                                <i class="fa fa-clock-o">15 Mins</i>
+                                                <i class="fa fa-users">Serves 2</i>
+
+                                                <p className="info-1"><em>You will need: </em>{val.ingredients}</p>
+                                                <p className="info-2"><em>Directions: </em>{val.directions}</p>
+                                        </div>
+                            </div>
+                                               
+                        </div>
+                        )
+                })}
+                </div>
            
         );
 
-    
-    //})
-   
-    
 }
 
 export default Search;

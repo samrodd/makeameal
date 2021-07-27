@@ -21,6 +21,10 @@ h1  {
   text-shadow: 2px 2px 2px #fff;
 }
 
+h3{
+  color: rgb(235, 228, 228);
+}
+
 .hero-image {
   background-image: linear-gradient(rgba(140, 150, 206), rgba(189, 137, 204, 0.2)), url("https://post.healthline.com/wp-content/uploads/2020/08/blueberries-1200x628-facebook-1200x628.jpg");
   height: 100%;
