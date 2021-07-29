@@ -57,7 +57,7 @@ app.post('/api/post', (req, res) => {
         }
     }
     console.log(newStr);
-    const resultQuery = `SELECT * FROM full_dataset WHERE ingredients_string LIKE ${newStr} ORDER BY ingredient_count LIMIT 20`;
+    const resultQuery = `SELECT * FROM full_dataset WHERE ingredients_string LIKE ${newStr} ORDER BY ingredient_count LIMIT 10`;
     console.log(resultQuery)
     connection.query(resultQuery, function(err, rows){
         if(err) throw err
