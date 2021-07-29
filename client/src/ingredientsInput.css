@@ -1,0 +1,39 @@
+.input-container{
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 50px 30px 30px 30px;
+    grid-gap: 3px;
+}
+
+.input-title{
+    grid-column-start: 1;
+    grid-column-end: -1;
+}
+
+.input-button{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none; /* Prevent double borders */
+    cursor: pointer;
+}
+button:hover{
+    background: #0bda72;
+}
+
+
+/*result start here*/
+.result-recipes{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.result-your-entered{
+    border: 1px solid white;
+    padding-bottom: 10px;
+    margin-top: 10px;
+}

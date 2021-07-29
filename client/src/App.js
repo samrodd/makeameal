@@ -1,5 +1,7 @@
 import './App.css';
-import Search from './search';
+import './search.css'
+import './ingredientsInput.css'
+import Search from './Search';
 
 
 function App() {
@@ -9,7 +11,7 @@ function App() {
       <div className="hero-text">
 
         <h1>Make A Meal</h1>
-        <h3>Create your meal now based on the ingredients you have at hand!</h3>
+        <h2>Create your meal now based on the ingredients you have at hand!</h2>
 
       </div>
       </div>

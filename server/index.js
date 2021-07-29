@@ -4,7 +4,7 @@ const app = express();
 const dotenv = require("dotenv");
 const bodyParser = require('body-parser');
 const cors = require("cors");
-const { json, response } = require('express');
+
 //const getRecipes = require("./getMatched_recipes");
 dotenv.config();
 
@@ -25,7 +25,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 
- connection.query('SELECT * FROM full_dataset WHERE ingredient_count = 3 ', function (err, rows, fields) {
+ connection.query('SELECT * FROM full_dataset WHERE ingredient_count = 30 ', function (err, rows, fields) {
      if (err) throw err
     
      console.log('Rows ', rows)
@@ -40,79 +40,52 @@ app.use(express.json());
 
 //var matched_id = [];
 app.post('/api/post', (req, res) => {
-    console.log('post')
-    var matched_id = [];
-    const ingredientName = req.body.ingredientName;
-    console.log(ingredientName)
-    let strArr = ingredientName.split(', ');
-    console.log(strArr);
-
-    //const strArr = req.body.ingredientName;
+    //console.log(req.body.inputIngredients)
     
-    
-    
-    let new_procedure = `CALL sys.new_procedure('${strArr[0]}', '${strArr[1]}', '${strArr[2]}', '${strArr[3]}', '${strArr[4]}', '${strArr[5]}', '${strArr[6]}', '${strArr[7]}')`;
-    console.log(new_procedure);
-    
-    connection.query(new_procedure, true, function(err, rows, fields){
-        if(err) throw err;
-        
-        console.log(rows[0])
-        
-        res.send(rows[0])
-        //if(rows[0].length != 0){ res.send(rows[0]) }
-        //else { res.send("no result found")}
-        
-        /*for(let value of Object.values(rows[0]))
-        {
-            //console.log(value.id);
-            matched_id.push(value.id);
+    const strArr = req.body.inputIngredients;
+    console.log(strArr)
+    if(strArr.length !== 0){
+    let newStr ="";
+    for(let i = 0; i < strArr.length; i++){
+        if(i != strArr.length - 1){
+            let temp = "'%" + strArr[i]+ "%'" + " AND ingredients_string LIKE ";
+            newStr += temp;
         }
-        console.log("post matched id is " + matched_id)
-        //console.log(Object.entries(rows[0][0].id));
-        //console.log(Object.values(JSON.parse(JSON.stringify(rows[0][0]))));
-        /*let result = Object.values(JSON.parse(JSON.stringify(rows)))
-        //console.log(result[0][0]);
-        if(typeof result[0][0] !== 'undefined')
-        {
-            
-            console.log("matched id is ...." + Object.values(JSON.parse(JSON.stringify(result[0][0]))));
-            matched_id.push(result[0][0].id);
+        else{
+            let temp = "'%" + strArr[i]+ "%'";
+            newStr += temp;
         }
-        */
-        
-    })
-})
-/*
-app.get('/api/get', (req, res, next) => {
-    
-    console.log('get matched_id is ' + matched_id)
-    let get_recipes_query = "SELECT id, title, ingredients, directions, ingredients_string FROM full_dataset LIMIT 1000";
-    //let get_recipes_query = "SELECT id, title, ingredients, directions, ingredients_string FROM full_dataset WHERE id = ?"
-    let all_recipes = [];
-    let matched_recipes = [];
-    connection.query(get_recipes_query, function(err, rows){
+    }
+    console.log(newStr);
+    const resultQuery = `SELECT * FROM full_dataset WHERE ingredients_string LIKE ${newStr} ORDER BY ingredient_count LIMIT 20`;
+    console.log(resultQuery)
+    connection.query(resultQuery, function(err, rows){
         if(err) throw err
-        let resultRows = Object.values(JSON.parse(JSON.stringify(rows)))
-        //res.json(rows);
-        for(let i = 0; i < resultRows.length; i++){
-            //all_recipes.push(resultRows[i]);]
-            for(let j = 0; j < matched_id.length; j++){
-                if(resultRows[i].id == matched_id[j]){
-                    matched_recipes.push(resultRows[i]);
-                    break;
-                }
-            }
-            //if(resultRows[i].id == matched_id){ matched_recipes.push(resultRows[i]);}
-        }
-        res.send(matched_recipes);
-        resultRows = [];
-        matched_id = [];
-        next();
+        console.log(rows)
+        res.send(JSON.stringify(rows))
     })
+    }
+
+    // const ingredientName = req.body.ingredientName;
+    // console.log(ingredientName)
+    // let strArr = ingredientName.split(', ');
+    // console.log(strArr);
+
+    //let new_procedure = `CALL sys.new_procedure('${req.body.firstIngredient}', '${req.body.secondIngredient}', '${req.body.thirdIngredient}', '${req.body.fourthIngredient}', '${req.body.fifthIngredient}', '${req.body.sixthIngredient}', '${req.body.seventhIngredient}', '${req.body.eighthIngredient}')`;
     
-   
-})*/
+    
+    // connection.query(new_procedure, true, function(err, rows, fields){
+    //     if(err) throw err;
+        
+    //     console.log(JSON.stringify(rows[0]))
+        
+    //     res.send(JSON.stringify(rows[0]))
+            
+    // })
+    
+    
+})
+
 
 app.listen(port, () => {
     console.log(`server is running at http://localhost:${port}`);

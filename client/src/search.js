@@ -1,85 +1,173 @@
-import "./App.css";
-import axios from "axios";
-import {useState} from "react";
-import './search.css'
+import React from "react"
+import Recommendation from "./Recommendation"
+import Results from "./Results"
 
-const Search = () => {
-    const [ingredientName, setIngredientName] = useState("");
-    const [matchedRecipes, setMatchedRecipes] = useState([]);
-
-   
-    const submitIngredient = async (e) => {
-        e.preventDefault();
-        await axios.post('http://localhost:3001/api/post', {
-            ingredientName: ingredientName
-        }).then(
-            (response) => setMatchedRecipes(response.data)
-            )
+class Search extends React.Component{
+    constructor(){
+        super()
+        this.state = {
+            firstIngredient: "",
+            secondIngredient: "",
+            thirdIngredient: "",
+            fourthIngredient: "",
+            fifthIngredient: "",
+            sixthIngredient: "",
+            seventhIngredient: "",
+            eighthIngredient: "",
+            recipes: [],
+            inputCount: 0,
+            doesRecipesGet: false
+        }
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+       
     }
-  
+
+    handleSubmit(event){
+        event.preventDefault()
+        const inputedIngredients = []
+        if(this.state.firstIngredient !== ""){ inputedIngredients.push(this.state.firstIngredient.toLocaleLowerCase()) }
+        if(this.state.secondIngredient !== ""){ inputedIngredients.push(this.state.secondIngredient.toLocaleLowerCase()) }
+        if(this.state.thirdIngredient !== ""){ inputedIngredients.push(this.state.thirdIngredient.toLocaleLowerCase()) }
+        if(this.state.fourthIngredient !== ""){ inputedIngredients.push(this.state.fourthIngredient.toLocaleLowerCase()) }
+        if(this.state.fifthIngredient !== ""){ inputedIngredients.push(this.state.fifthIngredient.toLocaleLowerCase()) }
+        if(this.state.sixthIngredient !== ""){ inputedIngredients.push(this.state.sixthIngredient.toLocaleLowerCase()) }
+        if(this.state.seventhIngredient !== ""){ inputedIngredients.push(this.state.seventhIngredient.toLocaleLowerCase()) }
+        if(this.state.eighthIngredient !== ""){ inputedIngredients.push(this.state.eighthIngredient.toLocaleLowerCase()) }
+        
+        console.log(inputedIngredients.length)
+        this.setState({ inputCount: inputedIngredients.length})
+        fetch("http://localhost:3001/api/post", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                inputIngredients: inputedIngredients
+
+            })
+        })
+        .then(response => response.json())
+        .then(response => {
+           this.setState({
+               recipes: response,
+               doesRecipesGet: true
+           })
+        })
+        
+
+    }
+    handleChange(event){
+        console.log(event.target)
+        this.setState({
+            [event.target.name] : event.target.value
+            
+        })
+    }
     
+    render(){
+        
         return(
             <div>
-            <form className = "search_form" onSubmit={submitIngredient}>
-                
-                <input
+            
+            <form className = "input-form" onSubmit={this.handleSubmit}>
+            <div className = "input-container">
+            <h2 className = "input-title">Please enter ingredients of your choice</h2>
+                <input 
+                    placeholder="1..."
                     type="text"
-                    placeholder="type your ingredient"
-                    name="ingredientName"
-                    onChange={ (e)=> {
-                        //console.log(e.target.value)
-                        
-                        setIngredientName(e.target.value)
-                    }}
-                    
+                    name="firstIngredient"
+                    value={this.state.firstIngredient}
+                    onChange={this.handleChange}
                 />
-                <button type="submit"><i className="fa fa-search"></i></button>
-                </form>
-
-                {/*
-                <div className = "result-list-container">
-                {matchedRecipes.map((val)=>{
-                   
-                    return(
-                        <div key={val.id}>
-                            <ul >
-                                <li ><h2>{val.title}</h2></li>
-                                <li ><h4>Ingredient:</h4> <span>{val.ingredients}</span></li>
-                                <li ><h4>Directions:</h4> {val.directions}</li>
-                                <li ><h4>Your ingredients: </h4> {val.ingredients_string}</li>
-                            </ul>
-                        </div>
-                    )     
-                })}
+                <input 
+                    placeholder="2..."
+                    type="text"
+                    name="secondIngredient"
+                    value={this.state.secondIngredient}
+                    onChange={this.handleChange}
+                />
+                <input 
+                    placeholder="3..."
+                    type="text"
+                    name="thirdIngredient"
+                    value={this.state.thirdIngredient}
+                    onChange={this.handleChange}
+                />
+                <input 
+                    placeholder="4..."
+                    type="text"
+                    name="fourthIngredient"
+                    value={this.state.fourthIngredient}
+                    onChange={this.handleChange}
+                />
+                <input 
+                    placeholder="5..."
+                    type="text"
+                    name="fifthIngredient"
+                    value={this.state.fifthIngredient}
+                    onChange={this.handleChange}
+                />
+                <input 
+                    placeholder="6..."
+                    type="text"
+                    name="sixthIngredient" //
+                    value={this.state.sixthIngredient}
+                    onChange={this.handleChange}
+                />
+                <input 
+                    placeholder="7..."
+                    type="text"
+                    name="seventhIngredient"
+                    value={this.state.seventhIngredient}
+                    onChange={this.handleChange}
+                />
+                <input 
+                    placeholder="8..."
+                    type="text"
+                    name="eighthIngredient"
+                    value={this.state.eighthIngredient}
+                    onChange={this.handleChange}
+                />
+                <button className = "input-button">Submit</button>
                 </div>
-                 */}
-               
-                {matchedRecipes.map((val)=>{
-                    return(
-                        <div>
-                            <div className="card">
-                                <div className="header">
-                                        <div className="icon">
-                                            <a href="#"><i className="fa fa-heart-o"></i></a>
-                                        </div>
-                                </div>
-                                        <div className="text">
-                                            <h2 className="food">{val.title}</h2>
-                                                <i class="fa fa-clock-o">15 Mins</i>
-                                                <i class="fa fa-users">Serves 2</i>
-
-                                                <p className="info-1"><em>You will need: </em>{val.ingredients}</p>
-                                                <p className="info-2"><em>Directions: </em>{val.directions}</p>
-                                        </div>
-                            </div>
-                                               
-                        </div>
-                        )
-                })}
-                </div>
+                
+            </form>
+            <div className="result-your-entered">
+                
+                <h2>Your ingredients</h2>
+                <p>
+                {this.state.firstIngredient}
+                {' '}
+                {this.state.secondIngredient}
+                {' '}
+                {this.state.thirdIngredient}
+                {' '}
+                {this.state.fourthIngredient}
+                {' '}
+                {this.state.fifthIngredient}
+                {' '}
+                {this.state.sixthIngredient}
+                {' '}
+                {this.state.seventhIngredient}
+                {' '}
+                {this.state.eighthIngredient}
+                </p>
+            </div>
+            <div className="result-recipes">
            
-        );
-
+            <div className="result-exact">
+                <Results recipes={this.state.recipes} count={this.state.inputCount} doesRecipesGet={this.state.doesRecipesGet}/>
+            </div>
+            <div className="result-recommendation">
+                <Recommendation recipes={this.state.recipes} count={this.state.inputCount} doesRecipesGet={this.state.doesRecipesGet}/>
+            </div>
+            </div>
+            </div>
+        )
+    }
 }
 
-export default Search;
+export default Search
+
