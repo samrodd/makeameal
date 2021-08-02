@@ -40,12 +40,13 @@ function Recommendation(props){
             return(
                 <div key = {val.id}>
                     <div className="card">
-                        <div className="header">
+                        {/* <div className="header">
                                 <div className="icon">
                                     <a href="#"><i className="fa fa-heart-o"></i></a>
                                 </div>
-                        </div>
+                        </div> */}
                         <div className="text">
+                            <img src={val.imageurl} alt="image"></img>
                             <h2 className="food">{val.title}</h2>
                                 <i className="fa fa-clock-o">15 Mins</i>
                                 <i className="fa fa-users">Serves 2</i>
